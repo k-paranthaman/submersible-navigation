@@ -39,6 +39,9 @@ public class PathPlanningService {
 
     private final PathSupport pathSupport;
 
+    private final NavigationGridMapper gridMapper;
+    private final ProbeStateMapper probeStateMapper;
+
 
     /**
      * Plans a path from the current probe state to the target state using the provided grid.
@@ -52,11 +55,11 @@ public class PathPlanningService {
 
         log.info("Received path planning request: {}", pathPlanningRequest);
 
-        final NavigationGrid navigationGrid = NavigationGridMapper.toDomain(pathPlanningRequest.getGrid());
+        final NavigationGrid navigationGrid = this.gridMapper.toDomain(pathPlanningRequest.getGrid());
 
-        final ProbeState starter = ProbeStateMapper.toDomain(pathPlanningRequest.getCurrentState());
+        final ProbeState starter = this.probeStateMapper.toDomain(pathPlanningRequest.getCurrentState());
 
-        final ProbeState target = ProbeStateMapper.toDomain(pathPlanningRequest.getTargetState());
+        final ProbeState target = this.probeStateMapper.toDomain(pathPlanningRequest.getTargetState());
 
         final NavigationContext context = new NavigationContext(navigationGrid, starter);
 
@@ -76,7 +79,8 @@ public class PathPlanningService {
     private PathPlanningResponse toResponse(final PathResult result) {
         log.debug("Mapping PathResult to PathPlanningResponse: {}", result);
         
-        final String commands = CommandParser.convertCommands(result.commands());
+        final String commands = (result.commands() !=null && !result.commands().isEmpty()) ?
+                CommandParser.convertCommands(result.commands()): "";
         final Status status = result.status() ? Status.SUCCESS : Status.FAILURE;
 
 

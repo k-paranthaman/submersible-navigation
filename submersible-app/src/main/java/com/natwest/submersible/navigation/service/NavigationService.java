@@ -29,13 +29,16 @@ public class NavigationService {
     private final NavigationSupport navigationSupport;
     private final ValidatorChain validatorChain;
 
+    private final NavigationGridMapper gridMapper;
+    private final ProbeStateMapper probeStateMapper;
+
     public NavigationResponse executeNavigation(final NavigationRequest navigationRequest) {
 
         log.info("Received navigation request: {}", navigationRequest);
 
-        final NavigationGrid navigationGrid = NavigationGridMapper.toDomain(navigationRequest.getGrid());
+        final NavigationGrid navigationGrid = gridMapper.toDomain(navigationRequest.getGrid());
 
-        final ProbeState probeState = ProbeStateMapper.toDomain(navigationRequest.getProbeState());
+        final ProbeState probeState = probeStateMapper.toDomain(navigationRequest.getProbeState());
 
         final List<Command> commands = CommandParser.parseCommands(navigationRequest.getCommands());
 
@@ -59,7 +62,7 @@ public class NavigationService {
 
     private NavigationResponse toResponse(final NavigationResult result) {
         log.debug("Mapping NavigationResult to NavigationResponse: {}", result);
-        final StateDto stateDto = ProbeStateMapper.toModel(result.probeState());
+        final StateDto stateDto = probeStateMapper.toModel(result.probeState());
         final Status status = result.status() ? Status.SUCCESS : Status.FAILURE;
 
         final List<PositionDto> path = result.path().

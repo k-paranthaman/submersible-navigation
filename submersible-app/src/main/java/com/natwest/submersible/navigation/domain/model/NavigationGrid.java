@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Set;
 
 /**
- * NavigationGrid represents the navigation area for the probe, including its dimensions and obstacle obstracles.
+ * NavigationGrid represents the navigation area for the probe, including its dimensions and obstacle obstacles.
  * It validates grid size on creation and provides methods to check if a position is within bounds or is an obstacle.
  * All actions are logged for traceability. This record is immutable.
  * <p>
@@ -19,18 +19,18 @@ import java.util.Set;
  * </pre>
  */
 @Slf4j
-public record NavigationGrid(int width, int height, Set<Position> obstracles) {
+public record NavigationGrid(int width, int height, Set<Position> obstacles) {
 
     /**
-     * Constructs a NavigationGrid with the given dimensions and obstacle obstracles.
+     * Constructs a NavigationGrid with the given dimensions and obstacle obstacles.
      * Validates that the grid size is within allowed limits.
      *
      * @param width      the width of the grid (must be 1..1000)
      * @param height     the height of the grid (must be 1..1000)
-     * @param obstracles  the set of obstacle obstracles
+     * @param obstacles  the set of obstacle obstacles
      * @throws IllegalArgumentException if dimensions are out of bounds
      */
-    public NavigationGrid(int width, int height, Set<Position> obstracles) {
+    public NavigationGrid(int width, int height, Set<Position> obstacles) {
         int MAX_SIZE = 1000;
 
         if (width <= 0 || height <= 0 || width > MAX_SIZE || height > MAX_SIZE) {
@@ -39,9 +39,14 @@ public record NavigationGrid(int width, int height, Set<Position> obstracles) {
         }
         this.width = width;
         this.height = height;
-        this.obstracles = obstracles;
+        if(obstacles == null){
+            log.info("No obstacles provided, initializing with empty set");
+            this.obstacles = Set.of();
+        } else {
+            this.obstacles = obstacles;
+        }
 
-        log.info("Created NavigationGrid with dimensions {}x{} and {} obstacles", width, height, obstracles.size());
+        log.info("Created NavigationGrid with dimensions {}x{} and {} obstacles", width, height, this.obstacles.size());
     }
 
     /**
@@ -68,7 +73,7 @@ public record NavigationGrid(int width, int height, Set<Position> obstracles) {
      * @return true if the position is an obstacle, false otherwise
      */
     public boolean isObstacle(final Position position){
-        boolean result = obstracles.contains(position);
+        boolean result = obstacles.contains(position);
         log.debug("Checking if position {} is an obstacle: {}", position, result);
         if(!result) {
             log.info("Position {} is an obstacle", position);

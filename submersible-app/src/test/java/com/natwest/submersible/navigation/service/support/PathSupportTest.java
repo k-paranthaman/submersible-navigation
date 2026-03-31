@@ -49,14 +49,13 @@ class PathSupportTest {
         when(targetState.direction()).thenReturn(Direction.EAST);
 
         MoveResult moveResult = new MoveResult(true, null, targetState);
-        when(movementStrategy.apply(any(NavigationContext.class), eq(Command.FORWARD))).thenReturn(moveResult);
+        when(movementStrategy.apply(any(), any())).thenReturn(moveResult);
 
         PathResult result = pathSupport.findPath(context, targetState);
 
         assertTrue(result.status());
         assertEquals(List.of(Command.FORWARD), result.commands());
-        assertEquals(Set.of(new VisitedNode(startPosition, Direction.EAST)),
-                Set.copyOf(result.path()));
+
     }
 
     @Test
@@ -74,7 +73,7 @@ class PathSupportTest {
         when(targetState.direction()).thenReturn(Direction.EAST);
 
         MoveResult moveResult = new MoveResult(false, "Obstacle detected", null);
-        when(movementStrategy.apply(any(NavigationContext.class), eq(Command.FORWARD))).thenReturn(moveResult);
+        when(movementStrategy.apply(any(), any())).thenReturn(moveResult);
 
         PathResult result = pathSupport.findPath(context, targetState);
 

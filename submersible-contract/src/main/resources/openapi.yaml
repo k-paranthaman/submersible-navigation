@@ -8,7 +8,7 @@ servers:
     description: Local development server
 
 paths:
-  /api/v1/navigattion/execute:
+  /api/v1/navigation/execute:
     post:
       summary: Validate and execute probe navigation command
       operationId: executeNavigation
@@ -68,7 +68,7 @@ paths:
 
 components:
   schemas:
-    GirdDto:
+    GridDto:
       type: object
       required:
         - width
@@ -165,7 +165,7 @@ components:
         - commands
       properties:
         grid:
-          $ref: '#/components/schemas/GirdDto'
+          $ref: '#/components/schemas/GridDto'
         probeState:
           $ref: '#/components/schemas/StateDto'
         commands:
@@ -186,7 +186,7 @@ components:
         - targetState
       properties:
         grid:
-          $ref: '#/components/schemas/GirdDto'
+          $ref: '#/components/schemas/GridDto'
         currentState:
           $ref: '#/components/schemas/StateDto'
         targetState:

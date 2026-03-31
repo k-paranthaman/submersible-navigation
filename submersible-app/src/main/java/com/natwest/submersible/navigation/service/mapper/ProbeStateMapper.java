@@ -7,6 +7,7 @@ import com.natwest.submersible.navigation.domain.model.Position;
 import com.natwest.submersible.navigation.domain.model.ProbeState;
 import com.natwest.submersible.navigation.domain.model.enums.Direction;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 /**
  * ProbeStateMapper provides mapping utilities between the API data transfer object (StateDto)
@@ -20,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
  * </pre>
  */
 @Slf4j
+@Component
 public class ProbeStateMapper {
 
     /**
@@ -28,7 +30,7 @@ public class ProbeStateMapper {
      * @param stateDto the state DTO from the API layer
      * @return ProbeState domain object or null if input is null
      */
-    public static ProbeState toDomain(final StateDto stateDto) {
+    public ProbeState toDomain(final StateDto stateDto) {
 
         if (stateDto == null) {
             log.info("Received null StateDto, returning null ProbeState");
@@ -47,7 +49,7 @@ public class ProbeStateMapper {
      * @param state the domain ProbeState object
      * @return StateDto for API layer or null if input is null
      */
-    public static StateDto toModel(final ProbeState state) {
+    public StateDto toModel(final ProbeState state) {
         if (state == null) {
             log.info("Received null ProbeState, returning null StateDto");
             return null;

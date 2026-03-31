@@ -12,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ProbeStateMapperTest {
 
+    private final ProbeStateMapper probeStateMapper = new ProbeStateMapper();
+
     @Test
     void testToDomainWithValidStateDto() {
         // Arrange
@@ -20,7 +22,7 @@ class ProbeStateMapperTest {
         StateDto stateDto = new StateDto(positionDto, directionDto);
 
         // Act
-        ProbeState probeState = ProbeStateMapper.toDomain(stateDto);
+        ProbeState probeState = probeStateMapper.toDomain(stateDto);
 
         // Assert
         assertNotNull(probeState);
@@ -32,7 +34,7 @@ class ProbeStateMapperTest {
     @Test
     void testToDomainWithNullStateDto() {
         // Act
-        ProbeState probeState = ProbeStateMapper.toDomain(null);
+        ProbeState probeState = probeStateMapper.toDomain(null);
 
         // Assert
         assertNull(probeState);
@@ -46,7 +48,7 @@ class ProbeStateMapperTest {
         ProbeState probeState = new ProbeState(position, direction);
 
         // Act
-        StateDto stateDto = ProbeStateMapper.toModel(probeState);
+        StateDto stateDto = probeStateMapper.toModel(probeState);
 
         // Assert
         assertNotNull(stateDto);
@@ -58,7 +60,7 @@ class ProbeStateMapperTest {
     @Test
     void testToModelWithNullProbeState() {
         // Act
-        StateDto stateDto = ProbeStateMapper.toModel(null);
+        StateDto stateDto = probeStateMapper.toModel(null);
 
         // Assert
         assertNull(stateDto);

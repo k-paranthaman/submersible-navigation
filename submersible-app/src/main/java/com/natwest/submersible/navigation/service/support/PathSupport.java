@@ -24,7 +24,7 @@ import static com.natwest.submersible.navigation.domain.model.enums.Command.*;
  * that will lead the probe to the desired location and orientation. The engine:
  * <ul>
  *   <li>Explores all possible moves (FORWARD, LEFT, RIGHT) from the current state using a queue-based BFS.</li>
- *   <li>Tracks visited obstracles and directions to avoid cycles and redundant exploration.</li>
+ *   <li>Tracks visited obstacles and directions to avoid cycles and redundant exploration.</li>
  *   <li>Delegates movement logic to a {@link MovementStrategy} to apply domain-specific movement and validation.</li>
  *   <li>Returns a {@link PathResult} containing the command sequence and path if the target is reachable, or a failure result otherwise.</li>
  *   <li>Logs key steps for traceability and debugging.</li>
@@ -68,7 +68,7 @@ public class PathSupport {
             if (isTargetReached(currentState, target)) {
                 log.info("Found target state: {} with path: {}", currentState, currentNode.commands());
                 final List<Position> path = visited.stream().map(PositionMapper::toDomain).toList();
-                log.debug("Visited obstracles during search: {}", path);
+                log.debug("Visited obstacles during search: {}", path);
                 return PathResult.success(currentNode.commands(), path);
             }
 
@@ -101,7 +101,7 @@ public class PathSupport {
         log.warn("No path found from {} to target {}", context.probeState(), target);
 
         final List<Position> path = visited.stream().map(PositionMapper::toDomain).toList();
-        log.debug("Visited obstracles during search: {}", path);
+        log.debug("Visited obstacles during search: {}", path);
 
         return PathResult.failure(path, "Target unreachable");
     }
