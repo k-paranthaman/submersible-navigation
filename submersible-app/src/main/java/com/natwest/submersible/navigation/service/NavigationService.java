@@ -70,6 +70,7 @@ public class NavigationService {
 
         final NavigationResponse response = new NavigationResponse(status, path);
         response.setFinalPosition(stateDto);
+        response.setReason(result.reason());
 
         log.debug("Mapped NavigationResponse: {}", response);
         return response;

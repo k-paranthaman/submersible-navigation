@@ -88,7 +88,6 @@ components:
           items:
             $ref: '#/components/schemas/PositionDto'
           description: List of obstacle positions in the grid
-          example: [{"x": 5, "y": 5}, {"x": 10, "y": 10}]
 
     PositionDto:
       type: object
@@ -161,7 +160,7 @@ components:
       type: object
       required:
         - grid
-        - state
+        - probeState
         - commands
       properties:
         grid:
@@ -208,7 +207,9 @@ components:
           items:
             $ref: '#/components/schemas/PositionDto'
           description: List of positions the probe has traversed during navigation
-          example: [{"x": 10, "y": 20}, {"x": 10, "y": 21}, {"x": 11, "y": 21}]
+        reason:
+          type: string
+          description: Explanation for failure if status is FAILURE
 
     PathPlanningResponse:
       type: object
@@ -226,4 +227,3 @@ components:
           items:
             $ref: '#/components/schemas/PositionDto'
           description: List of positions the probe will traverse to reach the target state
-          example: [{"x": 10, "y": 20}, {"x": 10, "y": 21}, {"x": 11, "y": 21}]

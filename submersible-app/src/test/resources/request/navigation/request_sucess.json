@@ -1,0 +1,17 @@
+{
+  "grid": {
+    "width": 10,
+    "height": 10,
+    "obstacles": [
+
+    ]
+  },
+  "probeState": {
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "direction": "NORTH"
+  },
+  "commands": "FF"
+}
