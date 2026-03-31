@@ -1,0 +1,28 @@
+
+server:
+  servlet:
+    context-path: /submersible-app
+
+spring:
+  application:
+    name: submersible-app
+  mvc:
+    problemdetails:
+      enabled: true
+
+springdoc:
+  packages-to-scan:
+    - com.natwest.submersible.navigation.api
+  swagger-ui:
+    path: /swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  endpoint:
+    health:
+      show-details: always
+    prometheus:
+      access: unrestricted

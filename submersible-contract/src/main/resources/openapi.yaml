@@ -1,0 +1,229 @@
+openapi: 3.0.3
+info:
+  title: Submersible API
+  description: API for managing submersible operations
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api
+    description: Local development server
+
+paths:
+  /api/v1/navigattion/execute:
+    post:
+      summary: Validate and execute probe navigation command
+      operationId: executeNavigation
+      tags:
+        - Navigation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NavigationRequest'
+      responses:
+        '200':
+          description: Navigation command accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NavigationResponse'
+        '400':
+          description: Invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+
+  /api/v1/navigation/plan:
+    post:
+      summary: Generate commands to reach a target state from the current state
+      operationId: planPath
+      tags:
+        - PathPlanning
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PathPlanningRequest'
+      responses:
+        '200':
+          description: Navigation path planned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PathPlanningResponse'
+        '400':
+          description: Invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '409':
+          description: No valid path found due to obstacles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+
+components:
+  schemas:
+    GirdDto:
+      type: object
+      required:
+        - width
+        - height
+      properties:
+        width:
+          type: integer
+          minimum: 1
+          maximum: 100
+          example: 100
+        height:
+          type: integer
+          minimum: 1
+          example: 100
+        obstacles:
+          type: array
+          items:
+            $ref: '#/components/schemas/PositionDto'
+          description: List of obstacle positions in the grid
+          example: [{"x": 5, "y": 5}, {"x": 10, "y": 10}]
+
+    PositionDto:
+      type: object
+      required:
+        - x
+        - y
+      properties:
+        x:
+          type: integer
+          minimum: 0
+          example: 10
+        y:
+          type: integer
+          minimum: 0
+          example: 20
+
+    DirectionDto:
+      type: string
+      enum: [NORTH, EAST, SOUTH, WEST]
+      example: "NORTH"
+
+    Commands:
+      type: string
+      description: |
+        Sequence of navigation commands for the probe.
+        F: Move forward
+        B: Move backward
+        L: Turn left
+        R: Turn right
+      example: "FFRFFLBB"
+
+    StateDto:
+      type: object
+      required:
+        - position
+        - direction
+      properties:
+        position:
+          $ref: '#/components/schemas/PositionDto'
+        direction:
+          $ref: '#/components/schemas/DirectionDto'
+
+    Status:
+      type: string
+      enum: [SUCCESS, FAILURE]
+      example: "SUCCESS"
+
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          example: "https://example.com/probs/invalid-input"
+        title:
+          type: string
+          example: "Invalid input parameters"
+        status:
+          type: integer
+          example: 400
+        detail:
+          type: string
+          example: "Latitude must be between -90 and 90"
+        instance:
+          type: string
+      additionalProperties: true
+
+
+    NavigationRequest:
+      type: object
+      required:
+        - grid
+        - state
+        - commands
+      properties:
+        grid:
+          $ref: '#/components/schemas/GirdDto'
+        probeState:
+          $ref: '#/components/schemas/StateDto'
+        commands:
+          type: string
+          description: |
+            Sequence of navigation commands for the probe.
+            F: Move forward
+            B: Move backward
+            L: Turn left
+            R: Turn right
+          example: "FFRFFLBB"
+
+    PathPlanningRequest:
+      type: object
+      required:
+        - grid
+        - currentState
+        - targetState
+      properties:
+        grid:
+          $ref: '#/components/schemas/GirdDto'
+        currentState:
+          $ref: '#/components/schemas/StateDto'
+        targetState:
+          $ref: '#/components/schemas/StateDto'
+
+    NavigationResponse:
+      type: object
+      required:
+        - finalState
+        - path
+        - status
+      properties:
+        finalPosition:
+          $ref: '#/components/schemas/StateDto'
+        status:
+          $ref: '#/components/schemas/Status'
+        path:
+          type: array
+          items:
+            $ref: '#/components/schemas/PositionDto'
+          description: List of positions the probe has traversed during navigation
+          example: [{"x": 10, "y": 20}, {"x": 10, "y": 21}, {"x": 11, "y": 21}]
+
+    PathPlanningResponse:
+      type: object
+      required:
+        - commands
+      properties:
+        commands:
+          type: string
+          description: Sequence of navigation commands to reach the target state.
+          example: "FFRFFLBB"
+        status:
+          $ref: '#/components/schemas/Status'
+        path:
+          type: array
+          items:
+            $ref: '#/components/schemas/PositionDto'
+          description: List of positions the probe will traverse to reach the target state
+          example: [{"x": 10, "y": 20}, {"x": 10, "y": 21}, {"x": 11, "y": 21}]
