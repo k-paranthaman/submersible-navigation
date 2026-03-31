@@ -7,6 +7,10 @@ import com.natwest.submersible.navidator.model.Status;
 import com.natwest.submersible.navigation.domain.context.NavigationContext;
 import com.natwest.submersible.navigation.domain.model.NavigationGrid;
 import com.natwest.submersible.navigation.domain.model.ProbeState;
+import com.natwest.submersible.navigation.domain.results.MoveResult;
+import com.natwest.submersible.navigation.domain.validator.ValidatorChain;
+import com.natwest.submersible.navigation.exception.ErrorCode;
+import com.natwest.submersible.navigation.exception.ProbeException;
 import com.natwest.submersible.navigation.service.support.PathSupport;
 import com.natwest.submersible.navigation.service.mapper.NavigationGridMapper;
 import com.natwest.submersible.navigation.service.mapper.PositionMapper;
@@ -41,6 +45,7 @@ public class PathPlanningService {
 
     private final NavigationGridMapper gridMapper;
     private final ProbeStateMapper probeStateMapper;
+    private final ValidatorChain validatorChain;
 
 
     /**
@@ -63,9 +68,26 @@ public class PathPlanningService {
 
         final NavigationContext context = new NavigationContext(navigationGrid, starter);
 
+        isPositionValid(context, target);
+
         final PathResult result = pathSupport.findPath(context, target);
 
         return toResponse(result);
+    }
+
+    private void isPositionValid(final NavigationContext context, final ProbeState target) {
+        MoveResult starterValidate = validatorChain.validate(context);
+        if (!starterValidate.status()) {
+            log.warn("Initial position validation failed: {}", starterValidate.reason());
+            throw new ProbeException(ErrorCode.INVALID_POSITION, "Invalid initial position: " + starterValidate.reason());
+        }
+
+        MoveResult targetValidate = validatorChain.validate(context.withState(target));
+
+        if (!targetValidate.status()) {
+            log.warn("Target position validation failed: {}", targetValidate.reason());
+            throw new ProbeException(ErrorCode.INVALID_TARGET, "Invalid target position: " + targetValidate.reason());
+        }
     }
 
     /**

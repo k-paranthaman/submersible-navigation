@@ -1,0 +1,23 @@
+{
+  "grid": {
+    "width": 5,
+    "height": 5,
+    "obstacles": [
+
+    ]
+  },
+  "currentState": {
+    "position": {
+      "x": 9,
+      "y": 20
+    },
+    "direction": "NORTH"
+  },
+  "targetState": {
+    "position": {
+      "x": 10,
+      "y": 20
+    },
+    "direction": "NORTH"
+  }
+}

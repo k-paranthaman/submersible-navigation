@@ -57,6 +57,8 @@ public enum ErrorCode {
 
     INVALID_POSITION("E006", "Invalid position input", 400),
 
+    INVALID_TARGET("E007", "Invalid target position", 400),
+
     /**
      * Internal server error.
      * <p>
