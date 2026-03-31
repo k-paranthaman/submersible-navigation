@@ -1,0 +1,7 @@
+{
+  "detail": "Invalid command code: W",
+  "instance": "/api/v1/navigation/execute",
+  "status": 400,
+  "title": "Probe Error",
+  "code": "E001"
+}

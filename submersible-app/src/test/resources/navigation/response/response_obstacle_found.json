@@ -1,0 +1,17 @@
+{
+  "status": "FAILURE",
+  "path": [
+    {
+      "x": 0,
+      "y": 1
+    }
+  ],
+  "finalPosition": {
+    "position": {
+      "x": 0,
+      "y": 1
+    },
+    "direction": "NORTH"
+  },
+  "reason": "Command FORWARD failed: Obstacle detected at position: Position[x=0, y=2]"
+}

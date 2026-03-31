@@ -1,0 +1,7 @@
+{
+  "detail": "Grid dimensions must be between 1 and 1000",
+  "instance": "/api/v1/navigation/execute",
+  "status": 400,
+  "title": "Probe Error",
+  "code": "E005"
+}
