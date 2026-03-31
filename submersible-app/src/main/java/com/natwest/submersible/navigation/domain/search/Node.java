@@ -1,7 +1,7 @@
 package com.natwest.submersible.navigation.domain.search;
 
-import com.natwest.submersible.navigation.domain.ProbeState;
-import com.natwest.submersible.navigation.domain.enums.Command;
+import com.natwest.submersible.navigation.domain.model.ProbeState;
+import com.natwest.submersible.navigation.domain.model.enums.Command;
 
 import java.util.List;
 

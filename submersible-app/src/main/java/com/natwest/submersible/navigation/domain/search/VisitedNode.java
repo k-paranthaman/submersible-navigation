@@ -1,7 +1,7 @@
 package com.natwest.submersible.navigation.domain.search;
 
-import com.natwest.submersible.navigation.domain.Position;
-import com.natwest.submersible.navigation.domain.enums.Direction;
+import com.natwest.submersible.navigation.domain.model.Position;
+import com.natwest.submersible.navigation.domain.model.enums.Direction;
 
 /**
  * VisitedNode is a value object used to track visited probe states during pathfinding algorithms (such as BFS).

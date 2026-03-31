@@ -4,19 +4,15 @@ import com.natwest.submersible.navidator.model.PathPlanningRequest;
 import com.natwest.submersible.navidator.model.PathPlanningResponse;
 import com.natwest.submersible.navidator.model.PositionDto;
 import com.natwest.submersible.navidator.model.Status;
-import com.natwest.submersible.navigation.context.NavigationContext;
-import com.natwest.submersible.navigation.domain.NavigationGrid;
-import com.natwest.submersible.navigation.domain.ProbeState;
-import com.natwest.submersible.navigation.engine.PathEngine;
-import com.natwest.submersible.navigation.exception.ErrorCode;
-import com.natwest.submersible.navigation.exception.ProbeException;
-import com.natwest.submersible.navigation.mapper.NavigationGridMapper;
-import com.natwest.submersible.navigation.mapper.PositionMapper;
-import com.natwest.submersible.navigation.mapper.ProbeStateMapper;
-import com.natwest.submersible.navigation.parser.CommandParser;
-import com.natwest.submersible.navigation.results.MoveResult;
-import com.natwest.submersible.navigation.results.PathResult;
-import com.natwest.submersible.navigation.validator.ValidatorChain;
+import com.natwest.submersible.navigation.domain.context.NavigationContext;
+import com.natwest.submersible.navigation.domain.model.NavigationGrid;
+import com.natwest.submersible.navigation.domain.model.ProbeState;
+import com.natwest.submersible.navigation.service.support.PathSupport;
+import com.natwest.submersible.navigation.service.mapper.NavigationGridMapper;
+import com.natwest.submersible.navigation.service.mapper.PositionMapper;
+import com.natwest.submersible.navigation.service.mapper.ProbeStateMapper;
+import com.natwest.submersible.navigation.service.parser.CommandParser;
+import com.natwest.submersible.navigation.domain.results.PathResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -30,7 +26,7 @@ import java.util.List;
  * <ul>
  *   <li>Receives {@link PathPlanningRequest} objects from controllers.</li>
  *   <li>Maps request DTOs to domain models using mappers.</li>
- *   <li>Delegates pathfinding logic to the {@link PathEngine}.</li>
+ *   <li>Delegates pathfinding logic to the {@link PathSupport}.</li>
  *   <li>Maps {@link PathResult} domain results to {@link PathPlanningResponse} DTOs for API output.</li>
  *   <li>Logs key steps for traceability and debugging.</li>
  * </ul>
@@ -41,8 +37,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PathPlanningService {
 
-    private final PathEngine pathEngine;
-    private final ValidatorChain validatorChain;
+    private final PathSupport pathSupport;
 
 
     /**
@@ -65,7 +60,7 @@ public class PathPlanningService {
 
         final NavigationContext context = new NavigationContext(navigationGrid, starter);
 
-        final PathResult result = pathEngine.findPath(context, target);
+        final PathResult result = pathSupport.findPath(context, target);
 
         return toResponse(result);
     }
@@ -81,7 +76,7 @@ public class PathPlanningService {
     private PathPlanningResponse toResponse(final PathResult result) {
         log.debug("Mapping PathResult to PathPlanningResponse: {}", result);
         
-        final String commands = CommandParser.convertComments(result.commands());
+        final String commands = CommandParser.convertCommands(result.commands());
         final Status status = result.status() ? Status.SUCCESS : Status.FAILURE;
 
 

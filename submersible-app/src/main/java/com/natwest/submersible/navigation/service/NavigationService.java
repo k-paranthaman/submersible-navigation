@@ -1,20 +1,20 @@
 package com.natwest.submersible.navigation.service;
 
 import com.natwest.submersible.navidator.model.*;
-import com.natwest.submersible.navigation.context.NavigationContext;
-import com.natwest.submersible.navigation.domain.NavigationGrid;
-import com.natwest.submersible.navigation.domain.ProbeState;
-import com.natwest.submersible.navigation.domain.enums.Command;
-import com.natwest.submersible.navigation.engine.NavigationEngine;
+import com.natwest.submersible.navigation.domain.context.NavigationContext;
+import com.natwest.submersible.navigation.domain.model.NavigationGrid;
+import com.natwest.submersible.navigation.domain.model.ProbeState;
+import com.natwest.submersible.navigation.domain.model.enums.Command;
+import com.natwest.submersible.navigation.service.support.NavigationSupport;
 import com.natwest.submersible.navigation.exception.ErrorCode;
 import com.natwest.submersible.navigation.exception.ProbeException;
-import com.natwest.submersible.navigation.mapper.NavigationGridMapper;
-import com.natwest.submersible.navigation.mapper.PositionMapper;
-import com.natwest.submersible.navigation.mapper.ProbeStateMapper;
-import com.natwest.submersible.navigation.parser.CommandParser;
-import com.natwest.submersible.navigation.results.MoveResult;
-import com.natwest.submersible.navigation.results.NavigationResult;
-import com.natwest.submersible.navigation.validator.ValidatorChain;
+import com.natwest.submersible.navigation.service.mapper.NavigationGridMapper;
+import com.natwest.submersible.navigation.service.mapper.PositionMapper;
+import com.natwest.submersible.navigation.service.mapper.ProbeStateMapper;
+import com.natwest.submersible.navigation.service.parser.CommandParser;
+import com.natwest.submersible.navigation.domain.results.MoveResult;
+import com.natwest.submersible.navigation.domain.results.NavigationResult;
+import com.natwest.submersible.navigation.domain.validator.ValidatorChain;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NavigationService {
 
-    private final NavigationEngine navigationEngine;
+    private final NavigationSupport navigationSupport;
     private final ValidatorChain validatorChain;
 
     public NavigationResponse executeNavigation(final NavigationRequest navigationRequest) {
@@ -43,7 +43,7 @@ public class NavigationService {
 
         isPositionValid(context);
 
-        final NavigationResult result = navigationEngine.executeCommand(context, commands);
+        final NavigationResult result = navigationSupport.executeCommand(context, commands);
 
         return toResponse(result);
     }
