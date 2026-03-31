@@ -13,7 +13,7 @@ import java.util.List;
  *   <li><b>status</b>: Indicates if the navigation was successful (true) or failed (false).</li>
  *   <li><b>reason</b>: Provides a failure reason if the navigation was unsuccessful; null if successful.</li>
  *   <li><b>probeState</b>: The state of the probe after navigation completes.</li>
- *   <li><b>path</b>: The list of positions traversed during navigation, including the final position.</li>
+ *   <li><b>path</b>: The list of obstracles traversed during navigation, including the final position.</li>
  * </ul>
  * <p>
  * Provides static factory methods for creating success and failure results.
@@ -25,7 +25,7 @@ public record NavigationResult(boolean status, String reason, ProbeState probeSt
      * Creates a successful navigation result with the given probe state and path.
      *
      * @param probeState the resulting probe state after successful navigation
-     * @param path the list of positions traversed
+     * @param path the list of obstracles traversed
      * @return a successful {@link NavigationResult}
      */
     public static NavigationResult success(final ProbeState probeState, final List<Position> path) {
@@ -37,7 +37,7 @@ public record NavigationResult(boolean status, String reason, ProbeState probeSt
      *
      * @param probeState the resulting probe state after failed navigation
      * @param reason the reason for the navigation failure
-     * @param path the list of positions traversed up to failure
+     * @param path the list of obstracles traversed up to failure
      * @return a failed {@link NavigationResult}
      */
     public static NavigationResult failure(final ProbeState probeState, final String reason, final List<Position> path) {
