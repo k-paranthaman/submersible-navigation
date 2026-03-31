@@ -5,12 +5,16 @@ import com.natwest.submersible.navidator.model.PathPlanningResponse;
 import com.natwest.submersible.navidator.model.Status;
 import com.natwest.submersible.navidator.model.GridDto;
 import com.natwest.submersible.navidator.model.StateDto;
+import com.natwest.submersible.navigation.domain.context.NavigationContext;
 import com.natwest.submersible.navigation.domain.model.NavigationGrid;
 import com.natwest.submersible.navigation.domain.model.Position;
 import com.natwest.submersible.navigation.domain.model.ProbeState;
 import com.natwest.submersible.navigation.domain.model.enums.Command;
+import com.natwest.submersible.navigation.domain.results.MoveResult;
 import com.natwest.submersible.navigation.domain.results.PathResult;
+import com.natwest.submersible.navigation.domain.validator.ValidatorChain;
 import com.natwest.submersible.navigation.exception.ErrorCode;
+import com.natwest.submersible.navigation.exception.ProbeException;
 import com.natwest.submersible.navigation.service.support.PathSupport;
 import com.natwest.submersible.navigation.service.mapper.NavigationGridMapper;
 import com.natwest.submersible.navigation.service.mapper.ProbeStateMapper;
@@ -35,6 +39,9 @@ class PathPlanningServiceTest {
     private NavigationGridMapper navigationGridMapper;
 
     @Mock
+    private ValidatorChain validatorChain;
+
+    @Mock
     private ProbeStateMapper probeStateMapper;
 
     @InjectMocks
@@ -55,6 +62,8 @@ class PathPlanningServiceTest {
         ProbeState currentState = mock(ProbeState.class);
         ProbeState targetState = mock(ProbeState.class);
         PathResult pathResult = mock(PathResult.class);
+        ProbeState probeState = mock(ProbeState.class);
+        NavigationContext context = new NavigationContext(navigationGrid, probeState);
 
         // Mocking request data
         when(request.getGrid()).thenReturn(gridDto);
@@ -65,6 +74,9 @@ class PathPlanningServiceTest {
         when(navigationGridMapper.toDomain(gridDto)).thenReturn(navigationGrid);
         when(probeStateMapper.toDomain(currentStateDto)).thenReturn(currentState);
         when(probeStateMapper.toDomain(targetStateDto)).thenReturn(targetState);
+
+        MoveResult validationResult = new MoveResult(true, null, probeState);
+        when(validatorChain.validate(any())).thenReturn(validationResult);
 
         // Mocking path support
         when(pathSupport.findPath(any(), any())).thenReturn(pathResult);
@@ -105,13 +117,10 @@ class PathPlanningServiceTest {
         when(pathResult.path()).thenReturn(List.of());
         when(pathSupport.findPath(any(), any())).thenReturn(pathResult);
 
-        PathPlanningResponse response = pathPlanningService.planPath(request);
+        MoveResult validationResult = new MoveResult(false, null, null);
+        when(validatorChain.validate(any())).thenReturn(validationResult);
 
-        assertNotNull(response);
-        assertEquals(Status.FAILURE, response.getStatus());
-        assertNotNull(response.getPath());
-        assertNotNull(response.getCommands());
+        assertThrows(ProbeException.class, () -> pathPlanningService.planPath(request));
 
-        verify(pathSupport).findPath(any(), eq(targetState));
     }
 }
