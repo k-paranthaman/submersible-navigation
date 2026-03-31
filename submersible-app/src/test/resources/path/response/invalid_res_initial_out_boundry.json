@@ -1,0 +1,7 @@
+{
+  "detail": "Invalid initial position: Probe is out of bounds at position: Position[x=9, y=20]",
+  "instance": "/api/v1/navigation/plan",
+  "status": 400,
+  "title": "Probe Error",
+  "code": "E006"
+}

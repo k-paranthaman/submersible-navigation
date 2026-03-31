@@ -1,0 +1,7 @@
+{
+  "detail": "Invalid initial position: Obstacle detected at position: Position[x=10, y=20]",
+  "instance": "/api/v1/navigation/plan",
+  "status": 400,
+  "title": "Probe Error",
+  "code": "E006"
+}
