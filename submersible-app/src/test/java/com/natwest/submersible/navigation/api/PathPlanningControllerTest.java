@@ -1,7 +1,7 @@
 package com.natwest.submersible.navigation.api;
 
-import com.natwest.submersible.navidator.model.PathPlanningRequest;
-import com.natwest.submersible.navidator.model.PathPlanningResponse;
+import com.natwest.submersible.navigator.model.PathPlanningRequest;
+import com.natwest.submersible.navigator.model.PathPlanningResponse;
 import com.natwest.submersible.navigation.service.PathPlanningService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

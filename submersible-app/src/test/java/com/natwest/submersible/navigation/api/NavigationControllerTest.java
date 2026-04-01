@@ -1,7 +1,7 @@
 package com.natwest.submersible.navigation.api;
 
-import com.natwest.submersible.navidator.model.NavigationRequest;
-import com.natwest.submersible.navidator.model.NavigationResponse;
+import com.natwest.submersible.navigator.model.NavigationRequest;
+import com.natwest.submersible.navigator.model.NavigationResponse;
 import com.natwest.submersible.navigation.service.NavigationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

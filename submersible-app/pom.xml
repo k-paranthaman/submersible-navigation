@@ -197,8 +197,8 @@
                                 <useSpringBoot3>true</useSpringBoot3>
                             </configOptions>
 
-                            <apiPackage>com.natwest.submersible.navidator.api</apiPackage>
-                            <modelPackage>com.natwest.submersible.navidator.model</modelPackage>
+                            <apiPackage>com.natwest.submersible.navigator.api</apiPackage>
+                            <modelPackage>com.natwest.submersible.navigator.model</modelPackage>
                             <output>${project.build.directory}/generated-sources/openapi</output>
                         </configuration>
                     </execution>

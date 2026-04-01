@@ -1,8 +1,8 @@
 package com.natwest.submersible.navigation.service.mapper;
 
-import com.natwest.submersible.navidator.model.DirectionDto;
-import com.natwest.submersible.navidator.model.PositionDto;
-import com.natwest.submersible.navidator.model.StateDto;
+import com.natwest.submersible.navigator.model.DirectionDto;
+import com.natwest.submersible.navigator.model.PositionDto;
+import com.natwest.submersible.navigator.model.StateDto;
 import com.natwest.submersible.navigation.domain.model.Position;
 import com.natwest.submersible.navigation.domain.model.ProbeState;
 import com.natwest.submersible.navigation.domain.model.enums.Direction;

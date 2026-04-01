@@ -1,6 +1,6 @@
 package com.natwest.submersible.navigation.service;
 
-import com.natwest.submersible.navidator.model.*;
+import com.natwest.submersible.navigator.model.*;
 import com.natwest.submersible.navigation.domain.context.NavigationContext;
 import com.natwest.submersible.navigation.domain.model.NavigationGrid;
 import com.natwest.submersible.navigation.domain.model.ProbeState;

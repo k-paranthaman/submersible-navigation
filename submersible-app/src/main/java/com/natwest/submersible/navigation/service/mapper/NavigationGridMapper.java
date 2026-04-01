@@ -1,6 +1,6 @@
 package com.natwest.submersible.navigation.service.mapper;
 
-import com.natwest.submersible.navidator.model.GridDto;
+import com.natwest.submersible.navigator.model.GridDto;
 import com.natwest.submersible.navigation.domain.model.NavigationGrid;
 import com.natwest.submersible.navigation.domain.model.Position;
 import com.natwest.submersible.navigation.exception.ErrorCode;

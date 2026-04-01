@@ -60,7 +60,7 @@ public record NavigationGrid(int width, int height, Set<Position> obstacles) {
         boolean result = position.x() >= 0 && position.x() < width && position.y() >= 0 && position.y() < height;
         log.debug("Checking if position {} is within bounds: {}", position, result);
 
-        if(!result){
+        if(result){
             log.info("Position {} is out of bounds for grid dimensions {}x{}", position, width, height);
         }
         return result;
@@ -75,7 +75,7 @@ public record NavigationGrid(int width, int height, Set<Position> obstacles) {
     public boolean isObstacle(final Position position){
         boolean result = obstacles.contains(position);
         log.debug("Checking if position {} is an obstacle: {}", position, result);
-        if(!result) {
+        if(result) {
             log.info("Position {} is an obstacle", position);
         }
         return result;

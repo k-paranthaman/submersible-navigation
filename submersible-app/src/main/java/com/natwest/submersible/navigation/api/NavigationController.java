@@ -1,8 +1,8 @@
 package com.natwest.submersible.navigation.api;
 
-import com.natwest.submersible.navidator.api.NavigationApi;
-import com.natwest.submersible.navidator.model.NavigationRequest;
-import com.natwest.submersible.navidator.model.NavigationResponse;
+import com.natwest.submersible.navigator.api.NavigationApi;
+import com.natwest.submersible.navigator.model.NavigationRequest;
+import com.natwest.submersible.navigator.model.NavigationResponse;
 import com.natwest.submersible.navigation.service.NavigationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

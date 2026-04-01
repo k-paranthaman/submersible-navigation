@@ -1,6 +1,6 @@
 package com.natwest.submersible.navigation.service;
 
-import com.natwest.submersible.navidator.model.*;
+import com.natwest.submersible.navigator.model.*;
 import com.natwest.submersible.navigation.domain.context.NavigationContext;
 import com.natwest.submersible.navigation.domain.model.NavigationGrid;
 import com.natwest.submersible.navigation.domain.model.ProbeState;
@@ -68,8 +68,7 @@ public class NavigationService {
         final List<PositionDto> path = result.path().
                 stream().map(PositionMapper::toModel).toList();
 
-        final NavigationResponse response = new NavigationResponse(status, path);
-        response.setFinalPosition(stateDto);
+        final NavigationResponse response = new NavigationResponse(stateDto, status, path);
         response.setReason(result.reason());
 
         log.debug("Mapped NavigationResponse: {}", response);

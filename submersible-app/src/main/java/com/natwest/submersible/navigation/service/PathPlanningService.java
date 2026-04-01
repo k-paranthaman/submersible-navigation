@@ -1,9 +1,9 @@
 package com.natwest.submersible.navigation.service;
 
-import com.natwest.submersible.navidator.model.PathPlanningRequest;
-import com.natwest.submersible.navidator.model.PathPlanningResponse;
-import com.natwest.submersible.navidator.model.PositionDto;
-import com.natwest.submersible.navidator.model.Status;
+import com.natwest.submersible.navigator.model.PathPlanningRequest;
+import com.natwest.submersible.navigator.model.PathPlanningResponse;
+import com.natwest.submersible.navigator.model.PositionDto;
+import com.natwest.submersible.navigator.model.Status;
 import com.natwest.submersible.navigation.domain.context.NavigationContext;
 import com.natwest.submersible.navigation.domain.model.NavigationGrid;
 import com.natwest.submersible.navigation.domain.model.ProbeState;

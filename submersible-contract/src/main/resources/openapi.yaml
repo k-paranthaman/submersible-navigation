@@ -77,7 +77,6 @@ components:
         width:
           type: integer
           minimum: 1
-          maximum: 100
           example: 100
         height:
           type: integer
@@ -194,7 +193,7 @@ components:
     NavigationResponse:
       type: object
       required:
-        - finalState
+        - finalPosition
         - path
         - status
       properties:

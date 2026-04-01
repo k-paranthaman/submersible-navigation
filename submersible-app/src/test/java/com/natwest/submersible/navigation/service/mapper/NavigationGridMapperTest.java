@@ -1,7 +1,7 @@
 package com.natwest.submersible.navigation.service.mapper;
 
-import com.natwest.submersible.navidator.model.GridDto;
-import com.natwest.submersible.navidator.model.PositionDto;
+import com.natwest.submersible.navigator.model.GridDto;
+import com.natwest.submersible.navigator.model.PositionDto;
 import com.natwest.submersible.navigation.domain.model.NavigationGrid;
 import org.junit.jupiter.api.Test;
 

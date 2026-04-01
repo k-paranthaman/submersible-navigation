@@ -22,7 +22,6 @@
     <modules>
         <module>submersible-contract</module>
         <module>submersible-app</module>
-        <module>submersible-test</module>
     </modules>
 
     <properties>

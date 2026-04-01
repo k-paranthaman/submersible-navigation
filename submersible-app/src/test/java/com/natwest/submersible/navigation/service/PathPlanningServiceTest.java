@@ -1,10 +1,5 @@
 package com.natwest.submersible.navigation.service;
 
-import com.natwest.submersible.navidator.model.PathPlanningRequest;
-import com.natwest.submersible.navidator.model.PathPlanningResponse;
-import com.natwest.submersible.navidator.model.Status;
-import com.natwest.submersible.navidator.model.GridDto;
-import com.natwest.submersible.navidator.model.StateDto;
 import com.natwest.submersible.navigation.domain.context.NavigationContext;
 import com.natwest.submersible.navigation.domain.model.NavigationGrid;
 import com.natwest.submersible.navigation.domain.model.Position;
@@ -13,12 +8,11 @@ import com.natwest.submersible.navigation.domain.model.enums.Command;
 import com.natwest.submersible.navigation.domain.results.MoveResult;
 import com.natwest.submersible.navigation.domain.results.PathResult;
 import com.natwest.submersible.navigation.domain.validator.ValidatorChain;
-import com.natwest.submersible.navigation.exception.ErrorCode;
 import com.natwest.submersible.navigation.exception.ProbeException;
-import com.natwest.submersible.navigation.service.support.PathSupport;
 import com.natwest.submersible.navigation.service.mapper.NavigationGridMapper;
 import com.natwest.submersible.navigation.service.mapper.ProbeStateMapper;
-import org.apache.tomcat.util.json.ParseException;
+import com.natwest.submersible.navigation.service.support.PathSupport;
+import com.natwest.submersible.navigator.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

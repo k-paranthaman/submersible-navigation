@@ -4,7 +4,6 @@ import com.natwest.submersible.navigation.domain.model.enums.Command;
 import com.natwest.submersible.navigation.exception.ErrorCode;
 import com.natwest.submersible.navigation.exception.ProbeException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -20,7 +19,6 @@ import java.util.List;
  * </ul>
  * Used by controllers and services to ensure command input is validated and consistently transformed between string and enum representations.
  */
-@Component
 @Slf4j
 public class CommandParser {
 
