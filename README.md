@@ -1,13 +1,31 @@
-# Submersible Navigation
+# Submersible Navigation System
 
-A Spring Boot multi-module REST API for controlling and navigating a submersible probe on a configurable grid.
-The system supports executing command sequences and automatically planning paths between two states while
-avoiding obstacles.
+## 🚀 Problem Solved
+
+This project implements an intelligent navigation system for a submersible probe operating on a bounded grid.
+
+Given:
+- A grid with defined dimensions
+- A starting position and direction
+- Obstacles within the grid
+
+The system supports:
+- Executing navigation commands safely
+- Avoiding obstacles and boundary violations
+- Tracking path of the probe
+- Returning detailed execution results
 
 ---
 
 ## Table of Contents
 
+- [Design Decisions](#-design-decisions)
+- [Assumptions](#-assumptions)
+- [Execution Behavior](#-execution-behavior)
+- [Core Approach](#-core-approach)
+- [Edge Cases Handled](#-edge-cases-handled)
+- [Test-Driven Design Approach](#-test-driven-design-approach)
+- [Scalability & Non-Functional Considerations](#-scalability--non-functional-considerations)
 - [Project Structure](#project-structure)
 - [Architecture Overview](#architecture-overview)
 - [Technology Stack](#technology-stack)
@@ -19,8 +37,83 @@ avoiding obstacles.
 - [Configuration](#configuration)
 - [Swagger / OpenAPI UI](#swagger--openapi-ui)
 - [Actuator & Monitoring](#actuator--monitoring)
+- [Summary](#-summary)
 
 ---
+
+
+## 🧠 Design Decisions
+
+The solution is designed to balance simplicity and extensibility.
+
+- **Strategy Pattern** is used to encapsulate movement behavior, allowing easy addition of new commands.
+- **Chain of Responsibility** is used for validation to modularize boundary and obstacle checks.
+- Separation of concerns between parsing, execution, and validation improves maintainability.
+- A **fail-fast approach** ensures invalid states are caught early without corrupting system state.
+
+While the problem can be solved with a simpler structure, this design demonstrates how the system can scale.
+
+---
+
+## 📌 Assumptions
+
+- Probe stops execution when an invalid move is encountered
+- Last valid position is retained as final state
+- Path includes all visited coordinates (including starting position)
+- Commands are limited to F, B, L, R
+- Grid coordinates are zero-based
+
+---
+
+## ⚙️ Execution Behavior
+
+- Commands are executed sequentially
+- Each movement is validated before execution
+- On failure (boundary/obstacle), execution stops
+- Partial path is returned
+- Detailed failure reason is included
+
+---
+
+## 🧩 Core Approach
+
+- Command parsing converts input string into executable actions
+- Movement strategy applies navigation logic
+- Validation pipeline ensures safe execution
+- Domain models represent grid, position, and probe state
+
+---
+
+## ⚠️ Edge Cases Handled
+
+- Boundary violations
+- Obstacle collisions
+- Invalid commands
+- Empty command sequence
+- Partial execution handling
+
+---
+
+## 🧪 Test-Driven Design Approach
+
+- Unit tests for domain, validators, and services
+- Integration tests for API
+- Edge-case focused testing
+- Both positive and negative scenarios covered
+
+---
+
+## ⚙️ Scalability & Non-Functional Considerations
+
+- Stateless REST API
+- Thread-safe design
+- Extensible architecture
+- Observability support (Actuator, metrics)
+- Clean layering for maintainability
+
+---
+
+# 📦 Project Details
 
 ## Project Structure
 
@@ -439,3 +532,10 @@ http://localhost:8080/submersible-app/v3/api-docs
 | `submersible-contract`  | `submersible-contract`   | `jar`     | OpenAPI spec packaged as a JAR                   |
 | `submersible-app`       | `submersible-app`        | `jar`     | Spring Boot application (executable JAR)         |
 
+
+## 📌 Summary
+
+- Clean and modular architecture
+- Strong OOP design
+- Scalable yet readable solution
+- Robust validation and error handling  
